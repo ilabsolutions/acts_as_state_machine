@@ -156,7 +156,7 @@ module ScottBarron                   #:nodoc:
 
         # Returns the current state the object is in, as a Ruby symbol.
         def current_state
-          self.send(self.class.state_column).to_sym
+          self.send(self.class.state_column).try(:to_sym)
         end
 
         # Returns what the next state for a given event would be, as a Ruby symbol.
@@ -276,7 +276,7 @@ module ScottBarron                   #:nodoc:
 
         protected
         def _state_scope(state)
-          raise InvalidState unless states.include?(state.to_sym)
+          raise InvalidState unless states.include?(state.try(:to_sym))
           where(state_column => state.to_s)
         end
       end
