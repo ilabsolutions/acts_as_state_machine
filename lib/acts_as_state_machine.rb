@@ -156,7 +156,7 @@ module ScottBarron                   #:nodoc:
 
         # Returns the current state the object is in, as a Ruby symbol.
         def current_state
-          self.send(self.class.state_column).to_sym
+          String(self.send(self.class.state_column)).to_sym
         end
 
         # Returns what the next state for a given event would be, as a Ruby symbol.
