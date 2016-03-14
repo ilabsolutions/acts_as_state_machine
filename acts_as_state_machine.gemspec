@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = 'acts_as_state_machine'
-  s.version = '3.0.5'
-  s.date = '2013-03-26'
+  s.version = '3.0.6'
+  s.date = '2016-03-14'
 
   s.summary = "Allows ActiveRecord models to define states and transition actions between them"
   s.description = "This act gives an Active Record model the ability to act as a finite state machine (FSM)."
