@@ -95,7 +95,9 @@ module ScottBarron                   #:nodoc:
           end
 
           def fire(record, raise_error = true, *args)
-            next_states(record).each do |transition|
+            valid_next_states = next_states(record)
+            return false if valid_next_states.empty?
+            valid_next_states.each do |transition|
               break true if transition.perform(record, raise_error, *args)
             end
 
@@ -223,7 +225,8 @@ module ScottBarron                   #:nodoc:
           e = SupportingClasses::Event.new(event, opts, transition_table, &block)
           self.event_table = event_table.merge(event.to_sym => e)
 
-          define_method("#{event.to_s}!") { |*args| e.fire(self, raise_error = true, *args) || (raise InvalidState) }
+          define_method("#{event.to_s}!") { |*args| e.fire(self, raise_error = true, *args) \
+            || (raise InvalidState, "Could not trigger event transition `#{event.to_s}` when state is `#{current_state.to_s}`") }
           define_method("#{event.to_s}") { |*args| e.fire(self, raise_error = false, *args) }
         end
 
