@@ -97,11 +97,8 @@ module ScottBarron                   #:nodoc:
           def fire(record, raise_error = true, *args)
             valid_next_states = next_states(record)
             return false if valid_next_states.empty?
-            valid_next_states.each do |transition|
-              break true if transition.perform(record, raise_error, *args)
-            end
 
-            true
+            valid_next_states.any? { |transition| transition.perform(record, raise_error, *args) }
           end
 
           def transitions(trans_opts)
